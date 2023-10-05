@@ -1,0 +1,38 @@
+version: "3"
+services:
+  springBootApp:
+    image: sidvps1007/api:1.1
+    container_name: docker-postgres-springboot-app
+    environment:
+      -   POSTGRES_HOST=docker-postgres-springboot-demo-db
+      -   SERVER_PORT=9013
+      -   SPRING_DATASOURCE_URL=jdbc:postgresql://postgresDb:5432/
+      -   SPRING_DATASOURCE_USERNAME=postgres
+      -   SPRING_DATASOURCE_PASSWORD=10072001
+      -   SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.PostgreSQLDialect
+      -   SPRING_JPA_HIBERNATE_DDL_AUTO=create
+    ports:
+      - "9000:9013"
+    networks:
+      - network
+    depends_on:
+      - postgresDb
+    restart: on-failure
+
+  postgresDb:
+    image: postgres:13.2
+    container_name: docker-postgres-springboot-demo-db
+    ports:
+      - "5434:5432"
+    networks:
+     - network
+    volumes:
+      - volume:/var/lib/postgresql/data
+    environment:
+      -   POSTGRES_USER=postgres
+      -   POSTGRES_PASSWORD=10072001
+      -   POSTGRESDB=postgres
+networks:
+  network:
+volumes:
+  volume:
