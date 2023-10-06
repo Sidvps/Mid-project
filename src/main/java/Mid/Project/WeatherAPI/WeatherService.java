@@ -1,3 +1,4 @@
+//Author: Siddhartha V
 package Mid.Project.WeatherAPI;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class WeatherService {
-	@Value("${openweathermap.api.key}")
+	@Value("${openweathermap.api.key}") //api key that is given in the application properties
 	private String apiKey;
 
 	private final WeatherRepository weatherRepository;
+	//RestTemplate is used for HTTP requests
 	private final RestTemplate restTemplate;
 	
 	@Autowired
@@ -22,7 +24,7 @@ public class WeatherService {
 
 	public void fetchAndSaveWeatherData(String location) {
 		String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + apiKey;
-
+		//exception handling if there is an exception is fetching the data from the api
 		try {
 			ResponseEntity<WeatherApiResponse> responseEntity = restTemplate.getForEntity(apiUrl,
 					WeatherApiResponse.class);
@@ -39,6 +41,7 @@ public class WeatherService {
 					weatherRepository.save(weatherData);
 				}
 			} else {
+				//err is the error message shown in case of a error to fetch the data
 				System.err.println(
 						"Error: Unable to fetch weather data. Status code: " + responseEntity.getStatusCodeValue());
 			}

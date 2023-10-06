@@ -1,3 +1,4 @@
+//Author: Siddhartha V
 package Mid.Project.WeatherAPI;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -5,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MainInfo {
 	private Double temp;
+	//default unit of temperature the api gives is in kelvin (celsius can also be selected)
 	private Double humidity;
 
 	// Getters and setters
